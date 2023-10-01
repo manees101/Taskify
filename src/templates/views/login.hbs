@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Login Form</title>
+    <link rel="stylesheet" href="./css/style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="main_menu">
+                <nav class="navbar">
+                    <a class="navbar-brand" href="/home">
+                        Taskify
+                    </a>
+                    <div class="nav_items">
+                      <ul class="navbar-nav">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="/register">Register</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+    </div>
+    <main class="mainContent"> 
+            <div class="loginForm container">
+    <div class="title">Login</div>
+    <div class="content">
+      <form action="/login" method="post">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Username</span>
+            <input type="text" placeholder="Enter your username" required name="username" id="username">
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            <input type="password" placeholder="Enter your password" required name="password" id="password">
+          </div>
+        </div>
+        <div class="button">
+          <input type="submit" value="login" id="loginBtn">
+        </div>
+      </form>
+      <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+  </div>
+    </main>
+
+
+</body>
+<script src="./js/loginscript.js"></script>
+</html>
