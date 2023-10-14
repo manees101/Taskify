@@ -5,7 +5,7 @@ const password = document.getElementById("password");
 password.addEventListener("change", async () => {
     try {
 
-        const req = await fetch(`/notes?username=${username.value}&password=${password.value}`, {
+        const req = await fetch(`/api/v1/notes?username=${username.value}&password=${password.value}`, {
             method: "GET"
         });
         const data = await req.json();

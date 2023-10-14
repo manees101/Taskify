@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 email:emailInput.value
             };
     
-           await fetch("/users",{
+           await fetch("/api/v1/user",{
                 method:"PATCH",
                 headers:{
               'Content-Type':'application/json'      
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const loadData=async()=>{
         try{
-             const data=await fetch('/users',{
+             const data=await fetch('/api/v1/user',{
                 method:"GET"
              })
              const user=await data.json();

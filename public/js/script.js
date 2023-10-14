@@ -62,9 +62,10 @@ const addNewNote = (event, mytext = '') => {
     textArea.addEventListener("change", (event) => {
         textbox.innerText = event.target.value;
         updateLS();
+        savenotes();
     })
     document.body.childNodes[3].children[1].appendChild(note);
-
+    savenotes();
 };
 
 const loadNotes = () => {
@@ -91,7 +92,7 @@ const saveNotes = async () => {
 
 const getDBNotes = async () => {
     try {
-        const req = await fetch("/notes", {
+        const req = await fetch("/api/v1/notes", {
             method: "GET"
         });
         const data = await req.json();
@@ -124,22 +125,18 @@ const savenotes = async () => {
             notesArr: notesArr,
             trashNotes: trash
         }
-        const req = await fetch("/notes", {
+        const req = await fetch("/api/v1/notes", {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json', // Set the content type to JSON
             },
             body: JSON.stringify(patchData)
         });
-        localStorage.removeItem("notes");
-        localStorage.removeItem("delNotes");
     }
     catch (err) {
-
+    console.log(err);
     }
 }
-// savenotes();
-// getDBNotes();
 loadNotes();
 
 addbtn.addEventListener("click", addNewNote);
@@ -158,6 +155,9 @@ searchBox.addEventListener('change', () => {
         location.reload();
     }
 })
-
 const logOut = document.getElementById("logout");
-logOut.addEventListener("click", savenotes);
+logOut.addEventListener("click", ()=>{
+    savenotes();
+    localStorage.removeItem("notes");
+    localStorage.removeItem("delNotes");
+});

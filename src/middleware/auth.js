@@ -8,7 +8,7 @@ try{
    
 }  catch(err)
 {
-   res.status(500).render("login");
+   res.status(500).redirect("/login");
 }   
 }
 

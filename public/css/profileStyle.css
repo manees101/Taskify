@@ -6,7 +6,9 @@
   font-family: 'Poppins',sans-serif;
 }
 /* main menu style */
-
+body::-webkit-scrollbar{
+  display: none;
+}
 .main_menu{
   height: 10vh;
   background-color: rgba(0,0,0,0.15);
@@ -63,14 +65,6 @@
 }
 .navbar-brand{
   font-size: 30px;
-  /* background-color: black; */
-  /*  === set image for heading background ==== 
-  background-image: url("../images/pic0.jpg");
-  background-size: cover;
-  background-position: center;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color:transparent; */
 
 }
 
@@ -83,34 +77,21 @@
     height: 90vh;
     width: 100vw;
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.profile-container {
-    width: 70%;
-    height: 90%;
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
+    color: #fff;
 }
-
 .profile-picture {
     text-align: center;
     margin-bottom: 10px;
     margin-top: 10px;
-    /* background-size: cover; */
     background-repeat: no-repeat;
-   
     background-color:#fff;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
 }
 
 .profile-picture img {
@@ -127,12 +108,12 @@ label {
 input[type="text"],
 input[type="password"],
 input[type="file"] {
-    width: 80%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
 }
 .profile-items{
-    width: 50em;
+    width: 40rem;
     display: flex;
     flex-direction: column;
     margin: 10px;

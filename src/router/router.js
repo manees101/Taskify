@@ -1,13 +1,29 @@
 const express = require("express");
 const router = new express.Router();
-const ToDoUsers = require('./usersmodel');
+const ToDoUsers = require('../models/usersmodel');
 const bcrypt = require("bcryptjs");
 const auth = require("../middleware/auth");
-const Users = require("./usersmodel");
+const Users = require("../models/usersmodel");
 const jwt = require("jsonwebtoken");
+const multer=require("multer");
+
+const storage=multer.diskStorage({
+    destination:function(req,file,cb){
+     cb(null,'../userUploads');
+    },
+    filename:function(req,file,cb)
+    {
+       cb(null,`${req.body.username}-${file.originalname}`);
+    }
+
+})
+const upload=multer({storage:storage});
 //handling get requests
-router.get("/login", auth, (req, res) => {
-    res.render("home");
+router.get("/",auth,(req,res)=>{
+    res.redirect("/home");
+})
+router.get("/login", (req, res) => {
+    res.render("login");
 
 });
 
@@ -34,7 +50,7 @@ router.get("/logout", async (req, res) => {
         await user[0].save();
         res.clearCookie("jwt");
 
-        res.render("login");
+        res.redirect("/login");
 
     }
     catch (err) {
@@ -45,7 +61,7 @@ router.get("/profile",auth,(req,res)=>{
     res.render("profile");
 })
 //handling requests at user API
-router.get("/users",async(req,res)=>{
+router.get("/api/v1/user",async(req,res)=>{
     try{
         const token = req.cookies.jwt;
         const verify = jwt.verify(token, process.env.SECRET_KEY);
@@ -62,7 +78,7 @@ router.get("/users",async(req,res)=>{
       res.status(500).send(err);
    }
 })
-router.patch("/users",async(req,res)=>{
+router.patch("/api/v1/user",async(req,res)=>{
     try
     {
         const {name,username,email}=req.body;
@@ -100,7 +116,7 @@ router.post("/register", async (req, res) => {
             res.cookie("jwt", token, {
                 httpOnly: true
             })
-            res.render("home");
+            res.redirect("/home");
         }
 
     } catch (err) {
@@ -119,7 +135,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true
         });
 
-        res.render("home");
+        res.redirect("/home");
 
 
     } catch (err) {
@@ -130,7 +146,7 @@ router.post("/login", async (req, res) => {
 
 //handeling Api requests for notes
 
-router.get("/notes", async (req, res) => {
+router.get("/api/v1/notes", async (req, res) => {
     try {
 
         const { username, password } = req.query;
@@ -147,7 +163,7 @@ router.get("/notes", async (req, res) => {
 
 })
 
-router.patch("/notes", async (req, res) => {
+router.patch("/api/v1/notes", async (req, res) => {
     try {
         const token = req.cookies.jwt;
         const verify = jwt.verify(token, process.env.SECRET_KEY);

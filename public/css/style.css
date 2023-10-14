@@ -71,14 +71,6 @@
 }
 .navbar-brand{
   font-size: 30px;
-  /* background-color: black; */
-  /*  == set image for heading background ==== 
-  background-image: url("../images/pic0.jpg");
-  background-size: cover;
-  background-position: center;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color:transparent; */
 
 }
 /* ========== Home Page Style ================= */
@@ -99,7 +91,6 @@
   color: #fff;
   border: 2px solid black;
   background:linear-gradient(130deg, #71b7e6, #9b59b6) ;
-  /* margin-left: 80%; */
   margin: 20px 20px 0px 90%;
   cursor: pointer;
 }
@@ -128,7 +119,6 @@
     top: 0px;
     color: #fff;
     background-color:rgb(30, 30, 30);
-    /* white-space: initial; */
     overflow: auto;
     word-break: break-word;
     padding: 10px 15px;
@@ -147,6 +137,16 @@
   border-radius: 5px;
   color: #fff;
   padding: 10px 15px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+.textArea::-webkit-scrollbar{
+  display: none;
+
+}
+.textBox::-webkit-scrollbar{
+  display: none;
 }
 .main{
   width: 100%;
