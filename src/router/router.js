@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 const Users = require("../models/usersmodel");
 const jwt = require("jsonwebtoken");
 const multer=require("multer");
-
+const asyncWraper=require("../middleware/async");
 const storage=multer.diskStorage({
     destination:function(req,file,cb){
      cb(null,'../userUploads');
@@ -37,29 +37,22 @@ router.get("/home", auth, (req, res) => {
 router.get("/trash", auth, (req, res) => {
     res.render("trash");
 })
-router.get("/logout", async (req, res) => {
-    try {
-        const token = req.cookies.jwt;
-        const verify = jwt.verify(token, process.env.SECRET_KEY);
-        const user = await Users.find({ _id: verify._id });
 
-
-        user[0].tokens = user[0].tokens.filter((currToken) => {
-            return currToken.token != token;
-        })
-        await user[0].save();
-        res.clearCookie("jwt");
-
-        res.redirect("/login");
-
-    }
-    catch (err) {
-        console.log(err);
-    }
-});
+router.get("/logout",asyncWraper(async (req, res) => {
+    const token = req.cookies.jwt;
+            const verify = jwt.verify(token, process.env.SECRET_KEY);
+            const user = await Users.find({ _id: verify._id });
+            user[0].tokens = user[0].tokens.filter((currToken) => {
+                return currToken.token != token;
+            })
+            await user[0].save();
+            res.clearCookie("jwt");
+            res.redirect("/login");
+}))
 router.get("/profile",auth,(req,res)=>{
     res.render("profile");
 })
+
 //handling requests at user API
 router.get("/api/v1/user",async(req,res)=>{
     try{
@@ -78,9 +71,7 @@ router.get("/api/v1/user",async(req,res)=>{
       res.status(500).send(err);
    }
 })
-router.patch("/api/v1/user",async(req,res)=>{
-    try
-    {
+router.patch("/api/v1/user",asyncWraper( async(req,res)=>{
         const {name,username,email}=req.body;
 
         const result=await Users.findOneAndUpdate({username:username},{
@@ -91,16 +82,12 @@ router.patch("/api/v1/user",async(req,res)=>{
             }
         },{new:true});
         res.status(201).send("user updated successfully");
-    }
-    catch(err)
-    {
-        res.status(500).send(err);
-    }
 
-})
+
+}))
 // handling post requests
-router.post("/register", async (req, res) => {
-    try {
+router.post("/register",asyncWraper( async (req, res) => {
+    
         const { name, username, email, password, confirmPassword } = req.body;
 
         if (password == confirmPassword) {
@@ -116,18 +103,12 @@ router.post("/register", async (req, res) => {
             res.cookie("jwt", token, {
                 httpOnly: true
             })
-            res.redirect("/home");
+            res.status(200).redirect("/home");
         }
 
-    } catch (err) {
-        console.log(err);
-        res.render("register");
-    }
-});
+}));
 
-router.post("/login", async (req, res) => {
-    try {
-
+router.post("/login", asyncWraper(async (req, res) => {
         const user = await ToDoUsers.find({ username: req.body.username });
         const check = await bcrypt.compare(req.body.password, user[0].password);
         const token = await user[0].generateToken();
@@ -137,17 +118,11 @@ router.post("/login", async (req, res) => {
 
         res.redirect("/home");
 
-
-    } catch (err) {
-        res.render("login");
-        console.log(err);
-    }
-});
+}));
 
 //handeling Api requests for notes
 
-router.get("/api/v1/notes", async (req, res) => {
-    try {
+router.get("/api/v1/notes", asyncWraper(async (req, res) => {
 
         const { username, password } = req.query;
 
@@ -156,15 +131,10 @@ router.get("/api/v1/notes", async (req, res) => {
         const check = await bcrypt.compare(password, data[0].password);
         const noteObj = { notes: data[0].notes, trash: data[0].trash };
         res.send(noteObj);
-    }
-    catch (err) {
-        res.status(404).send(err);
-    }
 
-})
+}))
 
-router.patch("/api/v1/notes", async (req, res) => {
-    try {
+router.patch("/api/v1/notes",asyncWraper( async (req, res) => {
         const token = req.cookies.jwt;
         const verify = jwt.verify(token, process.env.SECRET_KEY);
         //  const username=req.body.username;
@@ -177,8 +147,5 @@ router.patch("/api/v1/notes", async (req, res) => {
             }
         }, { new: true });
         res.status(201).send(data);
-    } catch (err) {
-        res.send(err);
-    }
-})
+}))
 module.exports = router;

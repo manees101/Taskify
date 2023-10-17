@@ -8,9 +8,12 @@ require("./db/conn");
 const resourcePath=path.join(__dirname,"../public");
 const viewPath=path.join(__dirname,"./templates/views");
 const partialPath=path.join(__dirname,"./templates/partials");
+const notFound=require("./middleware/not-found");
 const port=process.env.PORT||7000;
 const router=require("./router/router");
 const bodyParser = require('body-parser');
+const errorHandler=require("./middleware/error-handler");
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
@@ -20,7 +23,8 @@ app.set("views",viewPath);
 app.use(express.static(resourcePath));
 app.use(router);
 hbs.registerPartials(partialPath);
-
+app.use(notFound);
+app.use(errorHandler);
 app.listen(port,()=>{
     console.log(`Listening on port ${port}`);
 });

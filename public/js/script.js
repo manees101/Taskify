@@ -54,6 +54,7 @@ const addNewNote = (event, mytext = '') => {
 
         note.remove();
         updateLS();
+        savenotes();
     })
     editbtn.addEventListener("click", () => {
         textbox.classList.toggle("hidden");

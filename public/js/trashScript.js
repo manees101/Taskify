@@ -110,7 +110,7 @@ const savenotes = async () => {
         const req = await fetch("/api/v1/notes", {
             method: "PATCH",
             headers: {
-                'Content-Type': 'application/json', // Set the content type to JSON
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(patchData)
         });

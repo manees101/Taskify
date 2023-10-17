@@ -158,12 +158,16 @@
   border-radius: 5px;
   background-color:rgb(30, 30, 30);
 }
+
 .operations i{
   color: white;
   size: 40px;
   float: right;
   margin: 10px 10px 5px 5px;
   cursor: pointer;
+}
+.operations i:hover{
+  color: #5f5f63;
 }
 /* ====================== Trash page style =========================*/
 #delAll{
@@ -180,13 +184,19 @@
   margin: 20px 20px 0px 90%;
   cursor: pointer;
 }
+#delAll:hover
+{
+  background: linear-gradient(135deg, #71b7e6, #4e1066);
+}
 .delNotes{
   height: 100%;
   display: flex;
   position: relative;
   flex-wrap: wrap;
 }
-
+#addbtn:hover{
+  background: linear-gradient(135deg, #71b7e6, #4e1066);
+}
 
 /* ==================== registration and login form style =============*/
 .container{
@@ -278,6 +288,10 @@ form .input-box span.details{
  form .button{
    height: 45px;
    margin: 35px 0
+ }
+ #loginBtn:hover
+ {
+  background: linear-gradient(135deg, #71b7e6, #4e1066);
  }
  form .button input{
    height: 100%;
