@@ -11,8 +11,6 @@ password.addEventListener("change", async () => {
         const data = await req.json();
         localStorage.setItem("notes", JSON.stringify(data.notes));
         localStorage.setItem("delNotes", JSON.stringify(data.trash));
-
-        console.log(data);
     } catch (err) {
         console.log(err);
     }

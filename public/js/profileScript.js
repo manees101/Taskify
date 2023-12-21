@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('name');
     const usernameInput = document.getElementById('username');
     const emailInput = document.getElementById('email');
-    const avatarInput = document.getElementById('avatar');
+    // const avatarInput = document.getElementById('avatar');
     const editButton = document.getElementById('edit-button');
     const saveButton = document.getElementById('save-button');
     const profileForm = document.getElementById('profile-form');
@@ -16,11 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 username:usernameInput.value,
                 email:emailInput.value
             };
-    
            await fetch("/api/v1/user",{
                 method:"PATCH",
                 headers:{
-              'Content-Type':'application/json'      
+              'Content-Type':'application/json',      
                 },
                 body:JSON.stringify(patchData)
             });
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nameInput.removeAttribute('readonly');
         usernameInput.removeAttribute('readonly');
         emailInput.removeAttribute('readonly');
-        avatarInput.style.display = 'block';
+        // avatarInput.style.display = 'block';
         saveButton.style.display = 'block';
         editButton.style.display = 'none';
     });
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nameInput.setAttribute('readonly', true);
         usernameInput.setAttribute('readonly', true);
         emailInput.setAttribute('readonly', true);
-        avatarInput.style.display = 'none';
+        // avatarInput.style.display = 'none';
         saveButton.style.display = 'none';
         editButton.style.display = 'block';
         heading.innerText=nameInput.value;

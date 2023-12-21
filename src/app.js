@@ -9,11 +9,11 @@ const resourcePath=path.join(__dirname,"../public");
 const viewPath=path.join(__dirname,"./templates/views");
 const partialPath=path.join(__dirname,"./templates/partials");
 const notFound=require("./middleware/not-found");
-const port=process.env.PORT||7000;
+const PORT=process.env.PORT||7000;
 const router=require("./router/router");
 const bodyParser = require('body-parser');
 const errorHandler=require("./middleware/error-handler");
-
+const connectDB=require("./db/conn")
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
@@ -25,6 +25,18 @@ app.use(router);
 hbs.registerPartials(partialPath);
 app.use(notFound);
 app.use(errorHandler);
-app.listen(port,()=>{
-    console.log(`Listening on port ${port}`);
-});
+async function startServer()
+{
+    try
+    {
+        await connectDB(process.env.MONGO_URI)
+        app.listen(PORT,()=>{
+            console.log(`Listening on port ${PORT}`.yellow.bold);
+        });
+    }
+    catch(err)
+    {
+        console.log(`${err}`.red.bold)
+    }
+}
+startServer()

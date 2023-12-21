@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins',sans-serif;
+  
 }
 /* main menu style */
 
@@ -68,6 +69,7 @@
   align-items: center;
   padding: 10px;
   background: linear-gradient(130deg, #0b0b0b, #222223);
+
 }
 .navbar-brand{
   font-size: 30px;
@@ -100,7 +102,7 @@
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  
+  overflow:auto;
 }
 .note{
   height: 50%;
@@ -193,6 +195,7 @@
   display: flex;
   position: relative;
   flex-wrap: wrap;
+  overflow:auto;
 }
 #addbtn:hover{
   background: linear-gradient(135deg, #71b7e6, #4e1066);

@@ -2,6 +2,7 @@ const addbtn = document.getElementById("addbtn");
 const notes = document.querySelectorAll(".notes");
 const navbtn = document.querySelector(".nav-link");
 const searchBox = document.querySelector("#searchBox");
+const username=document.getElementById("username")
 const delNotesArr = [];
 const updateLS = () => {
     const textArea = document.querySelectorAll(".textArea");
@@ -54,7 +55,7 @@ const addNewNote = (event, mytext = '') => {
 
         note.remove();
         updateLS();
-        savenotes();
+        saveNotes();
     })
     editbtn.addEventListener("click", () => {
         textbox.classList.toggle("hidden");
@@ -63,10 +64,10 @@ const addNewNote = (event, mytext = '') => {
     textArea.addEventListener("change", (event) => {
         textbox.innerText = event.target.value;
         updateLS();
-        savenotes();
+        saveNotes();
     })
     document.body.childNodes[3].children[1].appendChild(note);
-    savenotes();
+    saveNotes();
 };
 
 const loadNotes = () => {
@@ -81,20 +82,15 @@ const loadNotes = () => {
     }
 
 }
-const getNotes = async () => {
 
-}
-
-const saveNotes = async () => {
-    const data = localStorage.getItem("notes");
-    const notes = JSON.parse(data);
-
-}
 
 const getDBNotes = async () => {
     try {
         const req = await fetch("/api/v1/notes", {
-            method: "GET"
+            method: "GET",
+            headers:{
+                Authorization:`Bearer ${localStorage.getItem("jwt")}`
+            }
         });
         const data = await req.json();
         localStorage.setItem("notes", JSON.stringify(data));
@@ -102,7 +98,7 @@ const getDBNotes = async () => {
         console.log(err);
     }
 }
-const savenotes = async () => {
+const saveNotes = async () => {
     try {
         const notes = localStorage.getItem("notes");
         const delnotes = localStorage.getItem("delNotes");
@@ -158,7 +154,7 @@ searchBox.addEventListener('change', () => {
 })
 const logOut = document.getElementById("logout");
 logOut.addEventListener("click", ()=>{
-    savenotes();
+    saveNotes();
     localStorage.removeItem("notes");
     localStorage.removeItem("delNotes");
 });

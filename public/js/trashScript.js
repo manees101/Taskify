@@ -28,6 +28,7 @@ const restoreNotes = (value) => {
         notesArr.push(value);
         localStorage.setItem("notes", JSON.stringify(notesArr));
     }
+    savenotes()
 };
 //function to add new note to the app
 
@@ -54,10 +55,12 @@ const addNewNote = (event, mytext = '') => {
     delbtn.addEventListener('click', () => {
         note.remove();
         updateLS();
+        savenotes()
     })
     restorebtn.addEventListener("click", () => {
         restoreNotes(textbox.innerText);
         note.remove();
+        savenotes()
     })
     document.body.childNodes[3].children[1].appendChild(note);
 
@@ -77,8 +80,10 @@ const loadNotes = () => {
 
 };
 //deleting all trash notes from localStorage
-delAll.addEventListener("click", () => {
+delAll.addEventListener("click", async () => {
+   
     localStorage.removeItem("delNotes");
+    await savenotes()
     location.reload();
 });
 
@@ -111,11 +116,11 @@ const savenotes = async () => {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
+                
             },
             body: JSON.stringify(patchData)
         });
-        localStorage.removeItem("notes");
-        localStorage.removeItem("delNotes");
+        
     }
     catch (err) {
 
@@ -141,6 +146,10 @@ searchBox.addEventListener('change', () => {
 })
 const logOut = document.getElementById("logout");
 //saving notes to DB upon logout
-logOut.addEventListener("click", savenotes);
+logOut.addEventListener("click",async()=>{
+    await savenotes()
+    localStorage.removeItem("notes");
+    localStorage.removeItem("delNotes");
+});
 
 loadNotes();

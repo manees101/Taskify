@@ -39,9 +39,7 @@ const userSchema=new mongoose.Schema({
         trash:[{type:String}]
         ,
       tokens:[{
-        token:{
-          type:String
-        }
+        token:String
       }]
 });
 
@@ -67,11 +65,10 @@ userSchema.methods.insertNotes=()=>{
   const notesArr=JSON.parse(data);
   this.notes=notesArr;
 }
-userSchema.insertTrash=()=>{
+userSchema.methods.insertTrash=()=>{
   const data=localStorage.getItem("delNotes");
   const notesArr=JSON.parse(data);
   this.trash=notesArr;
 }
-
 const Users=new mongoose.model("ToDoUser",userSchema);
 module.exports=Users;
