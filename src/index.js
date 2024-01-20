@@ -24,6 +24,9 @@ app.use(router);
 hbs.registerPartials(partialPath);
 app.use(notFound);
 app.use(errorHandler);
+app.get('/taskify',(req,res)=>{
+    res.json("Hello from server");
+})
 async function startServer()
 {
     try
