@@ -20,13 +20,13 @@ app.use(express.json());
 app.set("view engine","hbs");
 app.set("views",viewPath);
 app.use(express.static(resourcePath));
+app.get('/taskify',(req,res)=>{
+    res.json("Hello from server");
+})
 app.use(router);
 hbs.registerPartials(partialPath);
 app.use(notFound);
 app.use(errorHandler);
-app.get('/taskify',(req,res)=>{
-    res.json("Hello from server");
-})
 async function startServer()
 {
     try
