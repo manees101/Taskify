@@ -13,15 +13,17 @@ const router=require("./functions/router/router");
 const bodyParser = require('body-parser');
 const errorHandler=require("./functions/middleware/error-handler");
 const connectDB=require("./functions/db/conn")
+const morgan=require("morgan")
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
+app.use(morgan("tiny"))
 app.set("view engine","hbs");
 app.set("views",viewPath);
 app.use(express.static(resourcePath));
 app.get('/taskify',(req,res)=>{
-    res.json("Hello from server");
+    res.json("Hellow from server");
 })
 app.use(router);
 hbs.registerPartials(partialPath);

@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
               nameInput.value=user.name;
               usernameInput.value=user.username;
               emailInput.value=user.email;
-              profile.innerText=user.username;
               heading.innerText=user.name;    
         }
         catch(err)
